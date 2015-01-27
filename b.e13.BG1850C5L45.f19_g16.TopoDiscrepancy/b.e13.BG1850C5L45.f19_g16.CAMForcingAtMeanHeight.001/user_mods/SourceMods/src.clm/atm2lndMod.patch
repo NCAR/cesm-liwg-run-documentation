@@ -1,0 +1,74 @@
+--- /glade/p/work/sacks/cesm_code/cesm1_3_beta15_mods/models/lnd/clm/src/main/atm2lndMod.F90	2015-01-27 06:11:53.170153342 -0700
++++ atm2lndMod.F90	2015-01-27 14:07:51.275896419 -0700
+@@ -19,7 +19,8 @@
+   use decompMod      , only : bounds_type
+   use atm2lndType    , only : atm2lnd_type
+   use LandunitType   , only : lun                
+-  use ColumnType     , only : col                
++  use ColumnType     , only : col
++  use GridcellType   , only : grc
+   !
+   ! !PUBLIC TYPES:
+   implicit none
+@@ -53,6 +54,7 @@
+     use clm_varctl      , only : glcmec_downscale_rain_snow_convert
+     use domainMod       , only : ldomain
+     use QsatMod         , only : Qsat
++    use SubgridAveMod   , only : c2g
+     !
+     ! !ARGUMENTS:
+     type(bounds_type)  , intent(in)    :: bounds  
+@@ -109,6 +111,27 @@
+          end if
+       end do
+ 
++      ! Determine assumed forcing height for atmospheric forcing. For this experiment, we
++      ! assume that atmospheric forcings apply at the mean CLM grid cell height. This is
++      ! not actually the topographic height of CAM in general, but we make this
++      ! assumption so that CLM's mean forcings will agree with CAM's mean forcings (at
++      ! least roughly, neglecting non-linearities in the downscaling procedure).
++      call c2g(bounds, num_do_smb_c, filter_do_smb_c, col%glc_topo, grc%glc_topo, &
++           c2l_scale_type='unity', l2g_scale_type='unity')
++      ! If there was no information about topographic height (e.g., for grid cells that do
++      ! not contain any glacier, or only contain virtual glacier columns), use ldomain's
++      ! topo value; this currently agrees (roughly) with CAM's actual forcing height. We
++      ! can use CAM's forcing height in this case, since downscalings in this case will
++      ! not affect the mean grid cell values. Also, note that we are free to downscale
++      ! longwave in this case without having to do any normalization, so over virtual
++      ! columns we can have more consistency between downward longwave and the other
++      ! forcing variables.
++      do g = bounds%begg, bounds%endg
++         if (grc%glc_topo == spval) then
++            grc%glc_topo = ldomain%topo(g)
++         end if
++      end do
++
+       ! Downscale forc_t, forc_th, forc_q, forc_pbot, and forc_rho to columns.
+       ! For glacier_mec columns the downscaling is based on surface elevation.
+       ! For other columns the downscaling is a simple copy (above).
+@@ -120,7 +143,7 @@
+          ! This is a simple downscaling procedure 
+          ! Note that forc_hgt, forc_u, and forc_v are not downscaled.
+ 
+-         hsurf_g = ldomain%topo(g)                       ! gridcell sfc elevation
++         hsurf_g = grc%glc_topo(g)                       ! gridcell sfc elevation
+          hsurf_c = col%glc_topo(c)                       ! column sfc elevation
+          tbot_g  = forc_t_g(g)                           ! atm sfc temp
+          thbot_g = forc_th_g(g)                          ! atm sfc pot temp
+@@ -196,7 +219,6 @@
+     ! Must be done AFTER temperature downscaling
+     !
+     ! !USES:
+-    use domainMod       , only : ldomain
+     use landunit_varcon , only : istice_mec 
+     use clm_varcon      , only : lapse_glcmec
+     use clm_varctl      , only : glcmec_downscale_longwave
+@@ -254,7 +276,7 @@
+             l = col%landunit(c)
+             g = col%gridcell(c)
+ 
+-            hsurf_g = ldomain%topo(g)
++            hsurf_g = grc%glc_topo(g)
+             hsurf_c = col%glc_topo(c)
+ 
+             ! Here we assume that deltaLW = (dLW/dT)*(dT/dz)*deltaz

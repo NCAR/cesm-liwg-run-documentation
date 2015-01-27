@@ -1,0 +1,30 @@
+--- /glade/p/work/sacks/cesm_code/cesm1_3_beta15_mods/models/lnd/clm/src/main/GridcellType.F90	2015-01-27 06:11:53.157027000 -0700
++++ GridcellType.F90	2015-01-27 13:49:31.711462572 -0700
+@@ -33,6 +33,10 @@
+      real(r8) , pointer :: dayl            (:) ! daylength (seconds)
+      real(r8) , pointer :: prev_dayl       (:) ! daylength from previous timestep (seconds)
+ 
++     ! Mean surface elevation, across those columns that track it (spval if the grid cell
++     ! contains no columns that have glc_topo information)
++     real(r8), pointer :: glc_topo         (:)   ! surface elevation (m)
++     
+      ! indices into landunit-level arrays for landunits in this grid cell (ispval implies
+      ! this landunit doesn't exist on this grid cell) [1:max_lunit, begg:endg]
+      ! (note that the spatial dimension is last here, in contrast to most 2-d variables;
+@@ -72,6 +76,8 @@
+     allocate(this%dayl      (begg:endg)) ; this%dayl      (:) = nan
+     allocate(this%prev_dayl (begg:endg)) ; this%prev_dayl (:) = nan
+ 
++    allocate(this%glc_topo  (begg:endg)) ; this%glc_topo  (:) = nan
++    
+     allocate(this%landunit_indices(1:max_lunit, begg:endg)); this%landunit_indices(:,:) = ispval
+ 
+   end subroutine Init
+@@ -92,6 +98,7 @@
+     deallocate(this%max_dayl         )
+     deallocate(this%dayl             )
+     deallocate(this%prev_dayl        )
++    deallocate(this%glc_topo         )
+     deallocate(this%landunit_indices )
+ 
+   end subroutine Clean

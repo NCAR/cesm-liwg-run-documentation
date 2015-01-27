@@ -1,0 +1,57 @@
+--- /glade/p/work/sacks/cesm_code/cesm1_3_beta15_mods/models/lnd/clm/src/main/subgridAveMod.F90	2015-01-27 06:11:53.160766207 -0700
++++ subgridAveMod.F90	2015-01-27 13:46:31.013768769 -0700
+@@ -52,6 +52,7 @@
+   interface c2g
+      module procedure c2g_1d
+      module procedure c2g_2d
++     module procedure c2g_1d_filter
+   end interface
+   interface l2g
+      module procedure l2g_1d
+@@ -1111,6 +1112,46 @@
+   end subroutine c2g_2d
+ 
+   !-----------------------------------------------------------------------
++  subroutine c2g_1d_filter (bounds, numfc, filterc,  carr, garr, c2l_scale_type, l2g_scale_type)
++    !
++    ! !DESCRIPTION:
++    ! Perform column to gridcell averaging for single level column arrays, with a column
++    ! filter.
++    !
++    ! Note that the use of the filter differs here compared with p2c_1d_filter: Here, the
++    ! filter is given for the input (column) points; in p2c_1d_filter, the filter is
++    ! given for the output (column) points.
++    !
++    ! !ARGUMENTS:
++    type(bounds_type), intent(in) :: bounds  
++    integer , intent(in)  :: numfc
++    integer , intent(in)  :: filterc(numfc)
++    real(r8), intent(in)  :: carr( bounds%begc: )
++    real(r8), intent(out) :: garr( bounds%begg: )
++    character(len=*), intent(in) :: c2l_scale_type ! scale factor type for averaging
++    character(len=*), intent(in) :: l2g_scale_type ! scale factor type for averaging
++    !
++    ! !LOCAL VARIABLES:
++    integer :: fc,c  ! indices
++    real(r8), allocatable :: carr_in_filter(:)  ! values of carr, only within the filter
++    !-----------------------------------------------------------------------
++
++    ! Enforce expected array sizes
++    SHR_ASSERT_ALL((ubound(carr) == (/bounds%endc/)), errMsg(__FILE__, __LINE__))
++    SHR_ASSERT_ALL((ubound(garr) == (/bounds%endg/)), errMsg(__FILE__, __LINE__))
++
++    allocate(carr_in_filter(bounds%begc:bounds%endc), source=spval)
++    do fc = 1,numfc
++       c = filterc(fc)
++       carr_in_filter(c) = carr(c)
++    end do
++
++    call c2g(bounds, carr_in_filter, garr, c2l_scale_type, l2g_scale_type)
++    
++  end subroutine c2g_1d_filter
++
++  
++  !-----------------------------------------------------------------------
+   subroutine l2g_1d(bounds, larr, garr, l2g_scale_type)
+     !
+     ! !DESCRIPTION:

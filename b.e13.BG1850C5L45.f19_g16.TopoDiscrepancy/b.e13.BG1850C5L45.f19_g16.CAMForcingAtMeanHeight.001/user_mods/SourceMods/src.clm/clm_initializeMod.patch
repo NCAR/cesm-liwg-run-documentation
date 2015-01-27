@@ -1,0 +1,13 @@
+--- /glade/p/work/sacks/cesm_code/cesm1_3_beta15_mods/models/lnd/clm/src/main/clm_initializeMod.F90	2015-01-27 06:11:51.482334565 -0700
++++ clm_initializeMod.F90	2015-01-27 13:50:24.644013173 -0700
+@@ -408,6 +408,10 @@
+             ptr_gcell=grc%prev_dayl, default='inactive')
+     end if
+ 
++    call hist_addfld1d (fname='GLC_TOPO_GRC', units='m', &
++         avgflag='A', long_name='gridcell average glc_topo', &
++         ptr_gcell=grc%glc_topo, default='active')
++
+     ! ------------------------------------------------------------------------
+     ! Initialize component data structures 
+     ! ------------------------------------------------------------------------
