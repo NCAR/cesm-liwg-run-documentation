@@ -1,0 +1,31 @@
+The files in this directory document the run setup for a number of simulations
+that test the sensitivity of the coupled simulation to the consistency (or lack
+thereof) between CAM's topographic height and the mean topographic height of
+grid cells in CLM, arising from glc_mec columns.
+
+The following runs are included here:
+
+(1) Control: essentially an out-of-the-box run
+
+(2) AllToposEqualCAM: All elevation classes have their topographic heights
+    modified to equal the CAM topographic height in that grid cell. (We could
+    therefore use a single elevation class in each grid cell, but for simplicity
+    of coding, we are using multiple "elevation classes", all at the same
+    topographic height.)
+
+(3) CAMForcingAtMeanHeight: Here, the CLM elevation classes maintain their true
+    topographic distribution. But when we set the topographic height at which
+    the CAM forcing is assumed to apply, we use the mean topographic height of
+    the CLM columns rather than using CAM's actual topographic height.
+
+So, note that (1) has potential adjustment of the mean CAM forcings in each grid
+cell. (2) and (3), in contrast, should have grid cell mean forcings close to the
+CAM forcings (although there may be small discrepancies in (3) due to the
+non-linearity of some downscaling methods).
+
+
+-------------------
+
+TAG USED: cesm1_3_beta15
+
+Modifications applied in all runs:
