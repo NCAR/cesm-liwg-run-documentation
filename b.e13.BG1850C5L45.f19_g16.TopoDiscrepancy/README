@@ -28,3 +28,7 @@ non-linearity of some downscaling methods).
 
 TAG USED: cesm1_3_beta15, but with the scripts patch given in scripts.patch
 
+RUN SETUP: See the README files in the individual case directories for the setup of each case.
+
+   Note that all runs include the mods given in the user_mods_base directory.
+   
