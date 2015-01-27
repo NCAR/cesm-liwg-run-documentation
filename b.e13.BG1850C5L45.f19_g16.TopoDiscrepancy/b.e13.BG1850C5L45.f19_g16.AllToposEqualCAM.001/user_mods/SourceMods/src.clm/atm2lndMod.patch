@@ -1,0 +1,20 @@
+--- /glade/p/work/sacks/cesm_code/cesm1_3_beta15_mods/models/lnd/clm/src/main/atm2lndMod.F90	2015-01-27 06:11:53.170153342 -0700
++++ atm2lndMod.F90	2015-01-27 12:33:31.146346838 -0700
+@@ -121,7 +121,7 @@
+          ! Note that forc_hgt, forc_u, and forc_v are not downscaled.
+ 
+          hsurf_g = ldomain%topo(g)                       ! gridcell sfc elevation
+-         hsurf_c = col%glc_topo(c)                       ! column sfc elevation
++         hsurf_c = hsurf_g                       ! column sfc elevation
+          tbot_g  = forc_t_g(g)                           ! atm sfc temp
+          thbot_g = forc_th_g(g)                          ! atm sfc pot temp
+          qbot_g  = forc_q_g(g)                           ! atm sfc spec humid
+@@ -255,7 +255,7 @@
+             g = col%gridcell(c)
+ 
+             hsurf_g = ldomain%topo(g)
+-            hsurf_c = col%glc_topo(c)
++            hsurf_c = hsurf_g
+ 
+             ! Here we assume that deltaLW = (dLW/dT)*(dT/dz)*deltaz
+             ! We get dLW/dT = 4*eps*sigma*T^3 = 4*LW/T from the Stefan-Boltzmann law,
