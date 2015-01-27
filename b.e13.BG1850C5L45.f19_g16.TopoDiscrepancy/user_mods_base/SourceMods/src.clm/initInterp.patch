@@ -1,5 +1,5 @@
 --- /glade/p/work/sacks/cesm_code/cesm1_3_beta15_mods/models/lnd/clm/src/main/initInterp.F90	2015-01-27 06:11:51.471641413 -0700
-+++ initInterp.F90	2015-01-27 12:04:25.574148546 -0700
++++ initInterp.F90	2015-01-27 15:37:33.257665574 -0700
 @@ -49,7 +49,7 @@
    integer          :: ilun_vegetated_or_bare_soil
    integer          :: ilun_landice_multiple_elevation_classes 
@@ -9,3 +9,24 @@
    
    type, public :: subgrid_type
       character(len=16) :: name               ! pft, column, landunit
+@@ -699,6 +699,11 @@
+ 
+   subroutine set_mindist(begi, endi, bego, endo, activei, activeo, subgridi, subgrido, mindist_index)
+ 
++    ! Sets mindist_index to be the index of the input point to use as a template.
++    !
++    ! If override_missing is false, mindist_index may be 0, which indicates that the
++    ! output value should remain untouched for this point.
++    
+     ! --------------------------------------------------------------------
+     ! arguments
+     integer            , intent(in)  :: begi, endi 
+@@ -782,7 +787,7 @@
+           end if
+ 
+           ! Error conditions
+-          if ( distmin == spval )then
++          if ( distmin == spval .and. override_missing )then
+              write(iulog,*) 'ERROR interpinic set_mindist: Cannot find the closest output ni,no,type= ',&
+                   ni, no,subgridi%name
+              call endrun(msg=errMsg(__FILE__, __LINE__))

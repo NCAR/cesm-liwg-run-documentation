@@ -699,6 +699,11 @@ contains
 
   subroutine set_mindist(begi, endi, bego, endo, activei, activeo, subgridi, subgrido, mindist_index)
 
+    ! Sets mindist_index to be the index of the input point to use as a template.
+    !
+    ! If override_missing is false, mindist_index may be 0, which indicates that the
+    ! output value should remain untouched for this point.
+    
     ! --------------------------------------------------------------------
     ! arguments
     integer            , intent(in)  :: begi, endi 
@@ -782,7 +787,7 @@ contains
           end if
 
           ! Error conditions
-          if ( distmin == spval )then
+          if ( distmin == spval .and. override_missing )then
              write(iulog,*) 'ERROR interpinic set_mindist: Cannot find the closest output ni,no,type= ',&
                   ni, no,subgridi%name
              call endrun(msg=errMsg(__FILE__, __LINE__))
