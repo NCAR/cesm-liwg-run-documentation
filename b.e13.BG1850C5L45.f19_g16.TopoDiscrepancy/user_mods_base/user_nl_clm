@@ -1,1 +1,5 @@
 finidat_interp_source = '$DIN_LOC_ROOT/lnd/clm2/initdata_map/clmi.I1850CRUCLM45BGC.0241-01-01.1.9x2.5_g1v6_simyr1850_c140111.nc'
+
+hist_nhtfrq = 0,0
+hist_mfilt = 1,1
+hist_dov2xy = .true.,.false.
