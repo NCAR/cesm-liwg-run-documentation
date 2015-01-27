@@ -1,0 +1,11 @@
+--- /glade/p/work/sacks/cesm_code/cesm1_3_beta15_mods/models/lnd/clm/src/main/initInterp.F90	2015-01-27 06:11:51.471641413 -0700
++++ initInterp.F90	2015-01-27 12:04:25.574148546 -0700
+@@ -49,7 +49,7 @@
+   integer          :: ilun_vegetated_or_bare_soil
+   integer          :: ilun_landice_multiple_elevation_classes 
+   character(len=8) :: created_glacier_mec_landunits
+-  logical          :: override_missing = .true. ! override missing types with closest bare-soil
++  logical          :: override_missing = .false. ! override missing types with closest bare-soil
+   
+   type, public :: subgrid_type
+      character(len=16) :: name               ! pft, column, landunit

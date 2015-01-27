@@ -1,0 +1,18 @@
+--- /glade/p/work/sacks/cesm_code/cesm1_3_beta15_mods/models/lnd/clm/src/main/histFileMod.F90	2015-01-27 06:11:51.502172753 -0700
++++ histFileMod.F90	2015-01-27 12:03:32.062174782 -0700
+@@ -4238,6 +4238,7 @@
+        return
+     else
+        call masterlist_make_active (name=trim(fname), tape_index=1)
++       call masterlist_make_active (name=trim(fname), tape_index=2)
+     end if
+ 
+   end subroutine hist_addfld1d
+@@ -4526,6 +4527,7 @@
+        return
+     else
+        call masterlist_make_active (name=trim(fname), tape_index=1)
++       call masterlist_make_active (name=trim(fname), tape_index=2)
+     end if
+ 
+   end subroutine hist_addfld2d
