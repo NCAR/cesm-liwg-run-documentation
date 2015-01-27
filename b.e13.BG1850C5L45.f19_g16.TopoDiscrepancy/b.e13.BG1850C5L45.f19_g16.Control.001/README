@@ -1,3 +1,0 @@
-The create_newcase command for this run was:
-
-create_newcase -case b.e13.BG1850C5L45.f19_g16.Control.001 -compset BG1850C5L45 -res f19_g16 -mach yellowstone -user_mods_dir /glade/p/work/sacks/cesm_run_documentation/b.e13.BG1850C5L45.f19_g16.TopoDiscrepancy/b.e13.BG1850C5L45.f19_g16.Control.001/user_mods

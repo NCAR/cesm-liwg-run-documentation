@@ -28,7 +28,14 @@ non-linearity of some downscaling methods).
 
 TAG USED: cesm1_3_beta15, but with the scripts patch given in scripts.patch
 
-RUN SETUP: See the README files in the individual case directories for the setup of each case.
+MODS FOR ALL RUNS: See the user_mods_base directory. (This is included via
+include_user_mods files in each of the specific run setup directories.)
 
-   Note that all runs include the mods given in the user_mods_base directory.
-   
+RUN SETUP:
+
+(1) create_newcase -case b.e13.BG1850C5L45.f19_g16.Control.001 -compset BG1850C5L45 -res f19_g16 -mach yellowstone -user_mods_dir /glade/p/work/sacks/cesm_run_documentation/b.e13.BG1850C5L45.f19_g16.TopoDiscrepancy/b.e13.BG1850C5L45.f19_g16.Control.001/user_mods
+
+(2) create_newcase -case b.e13.BG1850C5L45.f19_g16.AllToposEqualCAM.001 -compset BG1850C5L45 -res f19_g16 -mach yellowstone -user_mods_dir /glade/p/work/sacks/cesm_run_documentation/b.e13.BG1850C5L45.f19_g16.TopoDiscrepancy/b.e13.BG1850C5L45.f19_g16.AllToposEqualCAM.001/user_mods
+
+(3) create_newcase -case b.e13.BG1850C5L45.f19_g16.CAMForcingAtMeanHeight.001 -compset BG1850C5L45 -res f19_g16 -mach yellowstone -user_mods_dir /glade/p/work/sacks/cesm_run_documentation/b.e13.BG1850C5L45.f19_g16.TopoDiscrepancy/b.e13.BG1850C5L45.f19_g16.CAMForcingAtMeanHeight.001/user_mods
+
