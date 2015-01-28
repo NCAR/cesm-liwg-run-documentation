@@ -10,3 +10,26 @@ Index: ccsm_utils/Case.template/config_compsets.xml
  <COMPSET sname="B_1850_CAM5_CLM45BGC_GLC_CISM2"  alias="BG1850C5L45BGCIS2" grid="gland">1850_CAM5_CLM45%BGC_CICE_POP2_RTM_CISM2_SWAV</COMPSET>
  
  <!-- C compsets -->
+Index: ccsm_utils/Tools/cesm_postrun_setup
+===================================================================
+--- ccsm_utils/Tools/cesm_postrun_setup	(revision 67498)
++++ ccsm_utils/Tools/cesm_postrun_setup	(working copy)
+@@ -22,13 +22,15 @@
+   exit -1
+ endif
+ set exceeded_max_time = 0
+-if ( `grep -q 'SUCCESSFUL TERMINATION' $CPLLogFile` != 0 ) then
++grep -q 'SUCCESSFUL TERMINATION' $CPLLogFile
++if ( $status == 0 ) then
+    echo "run SUCCESSFUL $sdate" >>& $CASEROOT/CaseStatus
+ else
+-  if ( `grep -q 'Wall clock time exceeds max_cplstep_time' $CPLLogFile` != 0 ) then
++  grep -q 'Wall clock time exceeds max_cplstep_time' $CPLLogFile
++  if ( $status == 0 ) then
+     echo "Model timestep time exceeded max_cplstep_time"
+     echo "run EXCEEDED max_cplstep_time $sdate" >>& $CASEROOT/CaseStatus 
+-    exceeded_max_time = 1
++    set exceeded_max_time = 1
+   else
+     echo "Model did not complete - see $RUNDIR/$CESMLogFile" 
+     echo "run FAILED $sdate" >>& $CASEROOT/CaseStatus 
