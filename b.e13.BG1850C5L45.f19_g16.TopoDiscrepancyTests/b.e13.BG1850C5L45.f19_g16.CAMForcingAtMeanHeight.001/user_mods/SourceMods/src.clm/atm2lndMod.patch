@@ -1,5 +1,5 @@
 --- /glade/p/work/sacks/cesm_code/cesm1_3_beta15_mods/models/lnd/clm/src/main/atm2lndMod.F90	2015-01-27 06:11:53.170153342 -0700
-+++ atm2lndMod.F90	2015-01-28 11:27:55.542946548 -0700
++++ atm2lndMod.F90	2015-01-28 13:09:53.114316887 -0700
 @@ -19,7 +19,8 @@
    use decompMod      , only : bounds_type
    use atm2lndType    , only : atm2lnd_type
@@ -18,7 +18,7 @@
      !
      ! !ARGUMENTS:
      type(bounds_type)  , intent(in)    :: bounds  
-@@ -109,6 +111,27 @@
+@@ -109,6 +111,29 @@
           end if
        end do
  
@@ -27,7 +27,9 @@
 +      ! not actually the topographic height of CAM in general, but we make this
 +      ! assumption so that CLM's mean forcings will agree with CAM's mean forcings (at
 +      ! least roughly, neglecting non-linearities in the downscaling procedure).
-+      call c2g(bounds, num_do_smb_c, filter_do_smb_c, col%glc_topo, grc%glc_topo, &
++      call c2g(bounds, num_do_smb_c, filter_do_smb_c, &
++           col%glc_topo(bounds%begc:bounds%endc), &
++           grc%glc_topo(bounds%begg:bounds%endg), &
 +           c2l_scale_type='unity', l2g_scale_type='unity')
 +      ! If there was no information about topographic height (e.g., for grid cells that do
 +      ! not contain any glacier, or only contain virtual glacier columns), use ldomain's
@@ -46,7 +48,7 @@
        ! Downscale forc_t, forc_th, forc_q, forc_pbot, and forc_rho to columns.
        ! For glacier_mec columns the downscaling is based on surface elevation.
        ! For other columns the downscaling is a simple copy (above).
-@@ -120,7 +143,7 @@
+@@ -120,7 +145,7 @@
           ! This is a simple downscaling procedure 
           ! Note that forc_hgt, forc_u, and forc_v are not downscaled.
  
@@ -55,7 +57,7 @@
           hsurf_c = col%glc_topo(c)                       ! column sfc elevation
           tbot_g  = forc_t_g(g)                           ! atm sfc temp
           thbot_g = forc_th_g(g)                          ! atm sfc pot temp
-@@ -196,7 +219,6 @@
+@@ -196,7 +221,6 @@
      ! Must be done AFTER temperature downscaling
      !
      ! !USES:
@@ -63,7 +65,7 @@
      use landunit_varcon , only : istice_mec 
      use clm_varcon      , only : lapse_glcmec
      use clm_varctl      , only : glcmec_downscale_longwave
-@@ -254,7 +276,7 @@
+@@ -254,7 +278,7 @@
              l = col%landunit(c)
              g = col%gridcell(c)
  

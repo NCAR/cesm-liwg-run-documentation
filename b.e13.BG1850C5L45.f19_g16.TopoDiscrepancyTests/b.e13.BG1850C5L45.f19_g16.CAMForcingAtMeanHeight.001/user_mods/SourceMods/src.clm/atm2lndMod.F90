@@ -116,7 +116,9 @@ contains
       ! not actually the topographic height of CAM in general, but we make this
       ! assumption so that CLM's mean forcings will agree with CAM's mean forcings (at
       ! least roughly, neglecting non-linearities in the downscaling procedure).
-      call c2g(bounds, num_do_smb_c, filter_do_smb_c, col%glc_topo, grc%glc_topo, &
+      call c2g(bounds, num_do_smb_c, filter_do_smb_c, &
+           col%glc_topo(bounds%begc:bounds%endc), &
+           grc%glc_topo(bounds%begg:bounds%endg), &
            c2l_scale_type='unity', l2g_scale_type='unity')
       ! If there was no information about topographic height (e.g., for grid cells that do
       ! not contain any glacier, or only contain virtual glacier columns), use ldomain's

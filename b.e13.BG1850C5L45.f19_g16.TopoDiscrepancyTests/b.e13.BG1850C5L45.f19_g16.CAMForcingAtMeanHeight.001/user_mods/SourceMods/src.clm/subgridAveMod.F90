@@ -1146,7 +1146,8 @@ contains
        carr_in_filter(c) = carr(c)
     end do
 
-    call c2g(bounds, carr_in_filter, garr, c2l_scale_type, l2g_scale_type)
+    call c2g(bounds, carr_in_filter(bounds%begc:bounds%endc), &
+         garr(bounds%begg:bounds%endg), c2l_scale_type, l2g_scale_type)
     
   end subroutine c2g_1d_filter
 

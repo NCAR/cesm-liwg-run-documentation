@@ -1,5 +1,5 @@
 --- /glade/p/work/sacks/cesm_code/cesm1_3_beta15_mods/models/lnd/clm/src/main/subgridAveMod.F90	2015-01-27 06:11:53.160766207 -0700
-+++ subgridAveMod.F90	2015-01-27 13:46:31.013768769 -0700
++++ subgridAveMod.F90	2015-01-28 13:09:01.924213023 -0700
 @@ -52,6 +52,7 @@
    interface c2g
       module procedure c2g_1d
@@ -8,7 +8,7 @@
    end interface
    interface l2g
       module procedure l2g_1d
-@@ -1111,6 +1112,46 @@
+@@ -1111,6 +1112,47 @@
    end subroutine c2g_2d
  
    !-----------------------------------------------------------------------
@@ -46,7 +46,8 @@
 +       carr_in_filter(c) = carr(c)
 +    end do
 +
-+    call c2g(bounds, carr_in_filter, garr, c2l_scale_type, l2g_scale_type)
++    call c2g(bounds, carr_in_filter(bounds%begc:bounds%endc), &
++         garr(bounds%begg:bounds%endg), c2l_scale_type, l2g_scale_type)
 +    
 +  end subroutine c2g_1d_filter
 +
