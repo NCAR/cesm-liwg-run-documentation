@@ -33,9 +33,9 @@ include_user_mods files in each of the specific run setup directories.)
 
 RUN SETUP:
 
-(1) create_newcase -case b.e13.BG1850C5L45.f19_g16.Control.001 -compset BG1850C5L45 -res f19_g16 -mach yellowstone -user_mods_dir /glade/p/work/sacks/cesm_run_documentation/b.e13.BG1850C5L45.f19_g16.TopoDiscrepancy/b.e13.BG1850C5L45.f19_g16.Control.001/user_mods
+(1) create_newcase -case b.e13.BG1850C5L45.f19_g16.Control.001 -compset BG1850C5L45 -res f19_g16 -mach yellowstone -user_mods_dir /glade/p/work/sacks/cesm_run_documentation/b.e13.BG1850C5L45.f19_g16.TopoDiscrepancyTests/b.e13.BG1850C5L45.f19_g16.Control.001/user_mods
 
-(2) create_newcase -case b.e13.BG1850C5L45.f19_g16.AllToposEqualCAM.001 -compset BG1850C5L45 -res f19_g16 -mach yellowstone -user_mods_dir /glade/p/work/sacks/cesm_run_documentation/b.e13.BG1850C5L45.f19_g16.TopoDiscrepancy/b.e13.BG1850C5L45.f19_g16.AllToposEqualCAM.001/user_mods
+(2) create_newcase -case b.e13.BG1850C5L45.f19_g16.AllToposEqualCAM.001 -compset BG1850C5L45 -res f19_g16 -mach yellowstone -user_mods_dir /glade/p/work/sacks/cesm_run_documentation/b.e13.BG1850C5L45.f19_g16.TopoDiscrepancyTests/b.e13.BG1850C5L45.f19_g16.AllToposEqualCAM.001/user_mods
 
-(3) create_newcase -case b.e13.BG1850C5L45.f19_g16.CAMForcingAtMeanHeight.001 -compset BG1850C5L45 -res f19_g16 -mach yellowstone -user_mods_dir /glade/p/work/sacks/cesm_run_documentation/b.e13.BG1850C5L45.f19_g16.TopoDiscrepancy/b.e13.BG1850C5L45.f19_g16.CAMForcingAtMeanHeight.001/user_mods
+(3) create_newcase -case b.e13.BG1850C5L45.f19_g16.CAMForcingAtMeanHeight.001 -compset BG1850C5L45 -res f19_g16 -mach yellowstone -user_mods_dir /glade/p/work/sacks/cesm_run_documentation/b.e13.BG1850C5L45.f19_g16.TopoDiscrepancyTests/b.e13.BG1850C5L45.f19_g16.CAMForcingAtMeanHeight.001/user_mods
 
