@@ -1,5 +1,5 @@
 --- /glade/p/work/sacks/cesm_code/cesm1_3_beta15_mods/models/lnd/clm/src/main/atm2lndMod.F90	2015-01-27 06:11:53.170153342 -0700
-+++ atm2lndMod.F90	2015-01-27 14:07:51.275896419 -0700
++++ atm2lndMod.F90	2015-01-28 11:27:55.542946548 -0700
 @@ -19,7 +19,8 @@
    use decompMod      , only : bounds_type
    use atm2lndType    , only : atm2lnd_type
@@ -38,8 +38,8 @@
 +      ! columns we can have more consistency between downward longwave and the other
 +      ! forcing variables.
 +      do g = bounds%begg, bounds%endg
-+         if (grc%glc_topo == spval) then
-+            grc%glc_topo = ldomain%topo(g)
++         if (grc%glc_topo(g) == spval) then
++            grc%glc_topo(g) = ldomain%topo(g)
 +         end if
 +      end do
 +

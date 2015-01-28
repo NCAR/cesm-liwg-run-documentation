@@ -127,8 +127,8 @@ contains
       ! columns we can have more consistency between downward longwave and the other
       ! forcing variables.
       do g = bounds%begg, bounds%endg
-         if (grc%glc_topo == spval) then
-            grc%glc_topo = ldomain%topo(g)
+         if (grc%glc_topo(g) == spval) then
+            grc%glc_topo(g) = ldomain%topo(g)
          end if
       end do
 
